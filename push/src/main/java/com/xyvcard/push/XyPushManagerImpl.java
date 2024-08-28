@@ -6,6 +6,11 @@ import com.heytap.msp.push.HeytapPushManager;
 import com.hihonor.push.sdk.HonorPushCallback;
 import com.hihonor.push.sdk.HonorPushClient;
 import com.huawei.hms.push.HmsMessaging;
+import com.vivo.push.IPushActionListener;
+import com.vivo.push.PushClient;
+import com.vivo.push.PushConfig;
+import com.vivo.push.listener.IPushQueryActionListener;
+import com.vivo.push.util.VivoPushException;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xyvcard.push.common.MyContext;
 import com.xyvcard.push.common.PushConstants;
@@ -37,9 +42,9 @@ class XyPushManagerImpl extends XyPushManager {
         } else if (BrandUtils.isBrandXiaoMi()) {
             initXiaomiPush();
         } else if (BrandUtils.isBrandOppo()) {
-//                initOPPO();
+            initOppoPush();
         } else if (BrandUtils.isBrandVivo()) {
-//                initVIVO();
+            initVIVOPush();
         } else if (BrandUtils.isBrandHonor()) {
             initHonorPush();
         }
@@ -52,10 +57,16 @@ class XyPushManagerImpl extends XyPushManager {
         HmsMessaging.getInstance(getContext()).setAutoInitEnabled(true);
     }
 
+    /**
+     * 初始化消息推送
+     */
     private void initXiaomiPush() {
         MiPushClient.registerPush(getContext(), PushConstants.xiaoMiAppID, PushConstants.xiaoMiAppKey);
     }
 
+    /**
+     * 初始化OPPO推送
+     */
     private void initOppoPush() {
         try {
             HeytapPushManager.init(getContext(), false);
@@ -69,11 +80,46 @@ class XyPushManagerImpl extends XyPushManager {
         }
     }
 
+    /**
+     * 初始化VIVO推送
+     */
+    private void initVIVOPush() {
+        try {
+            PushConfig config = new PushConfig.Builder().agreePrivacyStatement(true).build();
+            PushClient.getInstance(getContext()).initialize(config);
+        } catch (VivoPushException e) {
+            e.printStackTrace();
+        }
+
+        PushClient.getInstance(getContext().getApplicationContext()).turnOnPush(new IPushActionListener() {
+            @Override
+            public void onStateChanged(int state) {
+                // TODO: 开关状态处理， 0代表成功，获取regid建议在state=0后获取；
+                if (state == 0) {
+                    PushClient.getInstance(getContext()).getRegId(new IPushQueryActionListener() {
+                        @Override
+                        public void onSuccess(String regId) {
+                            refreshPushToken(regId);
+                        }
+
+                        @Override
+                        public void onFail(Integer integer) {
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     * 初始化荣耀推送
+     */
     private void initHonorPush() {
         // 荣耀推送
         boolean isSupport = HonorPushClient.getInstance().checkSupportHonorPush(getContext().getApplicationContext());
         if (!isSupport) {
-           return;
+            return;
         }
         HonorPushClient.getInstance().init(getContext().getApplicationContext(), true);
         // 获取PushToken

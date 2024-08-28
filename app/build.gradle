@@ -16,8 +16,8 @@ android {
         versionName "1.0"
 
         manifestPlaceholders = [
-//                "VIVO_APPKEY": "07bda72449c2c7fd81f8af3a3788c9cc",
-//                "VIVO_APPID" : "105687888",
+                "VIVO_APPKEY": "07bda72449c2c7fd81f8af3a3788c9cc",
+                "VIVO_APPID" : "105687888",
                 "HONOR_APPID": "104426314"
         ]
 

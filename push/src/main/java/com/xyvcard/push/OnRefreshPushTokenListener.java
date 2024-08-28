@@ -14,6 +14,7 @@ public interface OnRefreshPushTokenListener {
      *                   2.小米->RegId
      *                   3.荣耀->pushToken
      *                   4.oppo->registerID
+     *                   5.vivo->regId
      * @param deviceType 设备类型
      */
     void onRefreshToken(String token, String deviceType);

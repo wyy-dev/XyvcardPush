@@ -16,6 +16,16 @@
             android:name="com.hihonor.push.app_id"
             android:value="${HONOR_APPID}" />
         <!-- 荣耀推送 appId -->
+
+        <!-- vivo 推送 appId -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="${VIVO_APPKEY}" />
+
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="${VIVO_APPID}" />
+        <!-- vivo 推送 appId -->
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -82,6 +92,22 @@
             </intent-filter>
         </service>
         <!--=================OPPO推送 END==================================-->
+
+        <!--=================VIVO推送 START==================================-->
+        <!--push应用定义消息receiver声明-->
+        <receiver
+            android:name=".service.VivoPushMessageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!--接收push消息-->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true"
+            android:permission="com.push.permission.UPSTAGESERVICE" />
+        <!--=================VIVO推送 END==================================-->
     </application>
 
 </manifest>

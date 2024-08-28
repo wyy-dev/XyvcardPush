@@ -1,11 +1,10 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
     id 'maven-publish'
 }
 
-group = "com.github.wyy-dev"
-version = "1.0.1"
+//group = "com.github.wyy-dev"
+//version = "1.0.1"
 
 android {
     namespace 'com.xyvcard.push'
@@ -32,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     implementation libs.appcompat
     implementation libs.material
@@ -46,22 +45,24 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'commons-codec:commons-codec:1.6'
     implementation 'androidx.annotation:annotation:1.1.0'
+    // vivo推送
+    implementation files("libs/vivo_pushSDK_v4.0.4.0_504.aar")
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.github.wyy-dev'
-                artifactId = 'push'
-                version = '1.0.1'
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.github.wyy-dev'
+//                artifactId = 'push'
+//                version = '1.0.1'
+//            }
+//        }
+//    }
+//}
