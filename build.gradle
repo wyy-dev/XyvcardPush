@@ -6,9 +6,9 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // 华为推送
-        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+//        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
         // 荣耀推送
-        classpath 'com.hihonor.mcs:asplugin:2.0.1.300'
+//        classpath 'com.hihonor.mcs:asplugin:2.0.1.300'
     }
 }
 
