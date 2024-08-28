@@ -1,12 +1,11 @@
 plugins {
-//    alias(libs.plugins.android.library)
     id 'com.android.library'
     id 'kotlin-android'
     id 'maven-publish'
 }
 
 group = "com.github.wyy-dev"
-version = "1.0.0"
+version = "1.0.1"
 
 android {
     namespace 'com.xyvcard.push'
@@ -61,7 +60,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.wyy-dev'
                 artifactId = 'push'
-                version = '1.0.0'
+                version = '1.0.1'
             }
         }
     }
