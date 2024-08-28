@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!-- 荣耀推送 -->
+    <queries>
+        <intent>
+            <action android:name="com.hihonor.push.action.BIND_PUSH_SERVICE" />
+        </intent>
+    </queries>
+    <!-- 荣耀推送 -->
+    <application>
+        <!-- 荣耀推送 appId -->
+        <meta-data
+            android:name="com.hihonor.push.app_id"
+            android:value="${HONOR_APPID}" />
+        <!-- 荣耀推送 appId -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.xyvcard.push.XyPushInitializer"
+                android:value="androidx.startup" />
+        </provider>
+        <!--=================华为推送 START==================================-->
+        <service
+            android:name=".service.HmsMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!--=================华为推送 END==================================-->
+
+        <!--=================小米推送 START==================================-->
+        <receiver
+            android:name=".service.XMPushMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        <!--=================小米推送 END==================================-->
+
+        <!--=================荣耀推送 START==================================-->
+        <service
+            android:name=".service.HonorMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.hihonor.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!--=================荣耀推送 END==================================-->
+
+        <!--=================OPPO推送 START==================================-->
+        <!--（兼容Q版本，继承DataMessageCallbackService）-->
+        <service
+            android:name="com.heytap.msp.push.service.DataMessageCallbackService"
+            android:exported="true"
+            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
+            <intent-filter>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
+                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <!--（兼容Q以下版本，继承CompatibleDataMessageCallbackService）-->
+        <service
+            android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"
+            android:exported="true"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <!--=================OPPO推送 END==================================-->
+    </application>
+
+</manifest>

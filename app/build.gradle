@@ -1,0 +1,64 @@
+plugins {
+    alias(libs.plugins.android.application)
+    id 'com.huawei.agconnect'
+//    id 'com.hihonor.mcs.asplugin'
+}
+
+android {
+    namespace 'com.xyvcard.test'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.xyvcard.test"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        manifestPlaceholders = [
+//                "VIVO_APPKEY": "07bda72449c2c7fd81f8af3a3788c9cc",
+//                "VIVO_APPID" : "105687888",
+                "HONOR_APPID": "104426314"
+        ]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        config {
+            storeFile file('D:\\wyy\\mmyl\\key\\xyvcard\\apk.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
+    implementation project(':push')
+
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}

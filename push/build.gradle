@@ -1,0 +1,48 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+android {
+    namespace 'com.xyvcard.push'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation 'androidx.startup:startup-runtime:1.1.1'
+    // 华为推送
+    implementation 'com.huawei.hms:push:6.7.0.300'
+    // 小米推送 MiPush_SDK_Client_6_0_1-C_3rd.aar
+    // 荣耀推送
+    implementation 'com.hihonor.mcs:push:8.0.12.307'
+    // oppo推送
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'commons-codec:commons-codec:1.6'
+    implementation 'androidx.annotation:annotation:1.1.0'
+
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
