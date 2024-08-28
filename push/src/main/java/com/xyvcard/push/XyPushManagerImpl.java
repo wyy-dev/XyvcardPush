@@ -15,6 +15,7 @@ import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xyvcard.push.common.MyContext;
 import com.xyvcard.push.common.PushConstants;
 import com.xyvcard.push.service.OPPOMessageService;
+import com.xyvcard.push.utils.BadgeUtils;
 import com.xyvcard.push.utils.BrandUtils;
 
 import java.util.ArrayList;
@@ -48,6 +49,11 @@ class XyPushManagerImpl extends XyPushManager {
         } else if (BrandUtils.isBrandHonor()) {
             initHonorPush();
         }
+    }
+
+    @Override
+    public void updateBadge(int number) {
+        BadgeUtils.setBadge(getContext(), number);
     }
 
     /**

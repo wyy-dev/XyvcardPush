@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-//    id 'com.huawei.agconnect'
+    id 'com.huawei.agconnect'
 //    id 'com.hihonor.mcs.asplugin'
 }
 

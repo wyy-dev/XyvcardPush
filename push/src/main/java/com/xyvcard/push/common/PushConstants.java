@@ -19,6 +19,8 @@ public class PushConstants {
     public static String oppoAppKey = "df1fd1874702472d973cbe3ffea25c66";
     public static String oppoAppSecret = "6739dd8f1150469680fc1a2ba1697a12";
 
+    public static String vivoBadgeClassName = "";
+
     public static String notifyChannelId = "new_msg_notification";
     public static String notifyChannelName = "新消息通知";
     public static String notifyChannelDescription = "聊天消息通知";

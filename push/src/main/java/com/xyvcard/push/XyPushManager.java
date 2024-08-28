@@ -44,6 +44,12 @@ public abstract class XyPushManager {
      */
     public abstract void registerPush();
 
+    /**
+     * 更新桌面角标
+     * @param number
+     */
+    public abstract void updateBadge(int number);
+
     public Context getContext() {
         if (mContext == null) {
             return null;

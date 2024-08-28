@@ -93,12 +93,12 @@ public class BadgeUtils {
         }
     }
 
-    static void setBadge(Context context, int number) {
-        if (BrandUtils.isBrandHuawei()) {
+    public static void setBadge(Context context, int number) {
+        if (BrandUtils.isBrandHuawei() || BrandUtils.isBrandHonor()) {
             try {
                 Bundle bundle = new Bundle();
                 bundle.putString("package", XyPushManager.getInstance().getPackageName()); // com.test.badge is your package name
-                bundle.putString("class", XyPushManager.getInstance().getPackageName() + ".MainActivity"); // com.test. badge.MainActivity is your apk main activity
+                bundle.putString("class", PushConstants.huaweiBadgeClassName); // com.test. badge.MainActivity is your apk main activity
                 bundle.putInt("badgenumber", number);
                 context.getContentResolver().call(Uri.parse("content://com.huawei.android.launcher.settings/badge/"), "change_badge", null, bundle);
             } catch (Exception e) {
@@ -109,7 +109,7 @@ public class BadgeUtils {
                 Intent intent = new Intent("launcher.action.CHANGE_APPLICATION_NOTIFICATION_NUM");
                 intent.putExtra("packageName", context.getPackageName());
                 // String launchClassName = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName()).getComponent().getClassName();
-                intent.putExtra("className", XyPushManager.getInstance().getPackageName() + ".MainActivity");
+                intent.putExtra("className", PushConstants.vivoBadgeClassName);
                 intent.putExtra("notificationNum", number);
                 context.sendBroadcast(intent);
             } catch (Exception e) {

@@ -13,7 +13,7 @@ public class BrandUtils {
     }
 
     public static boolean isBrandHuawei() {
-        return "huawei".equalsIgnoreCase(getBrand()) || "huawei".equalsIgnoreCase(getManufacturer()) || "honor".equalsIgnoreCase(getBrand());
+        return "huawei".equalsIgnoreCase(getBrand()) || "huawei".equalsIgnoreCase(getManufacturer());
     }
 
 //    public static boolean isBrandMeizu() {

@@ -45,8 +45,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'commons-codec:commons-codec:1.6'
     implementation 'androidx.annotation:annotation:1.1.0'
-    // vivo推送
-    implementation files("libs/vivo_pushSDK_v4.0.4.0_504.aar")
+    // vivo推送 vivo_pushSDK_v4.0.4.0_504.aar
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

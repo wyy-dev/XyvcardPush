@@ -12,9 +12,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="打开新消息通知"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/set_badge_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/set_badge_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置角标"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/open_notify_setting" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
