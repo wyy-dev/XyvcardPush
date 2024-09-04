@@ -1,10 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'maven-publish'
+    id "com.vanniktech.maven.publish" version "0.28.0"
 }
-
-//group = "com.github.wyy-dev"
-//version = "1.0.1"
 
 android {
     namespace 'com.xyvcard.push'
@@ -27,14 +25,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    implementation libs.appcompat
-    implementation libs.material
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.startup:startup-runtime:1.1.1'
     // 华为推送
     implementation 'com.huawei.hms:push:6.7.0.300'
@@ -47,21 +49,52 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     // vivo推送 vivo_pushSDK_v4.0.4.0_504.aar
 
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
+    implementation project(path: ':mi')
+    implementation project(path: ':oppo')
+    implementation project(path: ':vivo')
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            // Creates a Maven publication called "release".
-//            release(MavenPublication) {
-//                from components.release
-//                groupId = 'com.github.wyy-dev'
-//                artifactId = 'push'
-//                version = '1.0.1'
-//            }
-//        }
-//    }
-//}
+import com.vanniktech.maven.publish.SonatypeHost
+
+mavenPublishing {
+//    publishToMavenCentral(SonatypeHost.DEFAULT)
+    // or when publishing to https://s01.oss.sonatype.org
+//    publishToMavenCentral(SonatypeHost.S01)
+    // or when publishing to https://central.sonatype.com/
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+}
+
+mavenPublishing {
+    coordinates("io.github.wyy-dev", "xypush", "0.0.2")
+
+    pom {
+        name = "xypush"
+        description = "XyvcardPush"
+        inceptionYear = "2024"
+        url = "https://github.com/wyy-dev/XyvcardPush/"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "wyy-dev"
+                name = "wyy"
+                url = "https://github.com/wyy-dev/"
+            }
+        }
+        scm {
+            url = "https://github.com/wyy-dev/XyvcardPush/"
+            connection = "scm:git:git://github.com/wyy-dev/XyvcardPush.git"
+            developerConnection = "scm:git:ssh://git@github.com/wyy-dev/XyvcardPush.git"
+        }
+    }
+}

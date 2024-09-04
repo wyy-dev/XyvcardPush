@@ -27,3 +27,6 @@ dependencyResolutionManagement {
 rootProject.name = "XyvcardPush"
 include ':app'
 include ':push'
+include ':mi'
+include ':oppo'
+include ':vivo'

@@ -6,8 +6,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
+import com.hihonor.push.sdk.HonorPushClient;
+import com.vivo.push.PushClient;
+import com.vivo.push.PushConfig;
+import com.vivo.push.util.VivoPushException;
 import com.xyvcard.push.common.MyContext;
 import com.xyvcard.push.common.PushConstants;
+import com.xyvcard.push.utils.BrandUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -37,6 +42,23 @@ public abstract class XyPushManager {
         mContext = new WeakReference<>(context);
         MyContext.getInstance().init(context);
         notifyChannel(context);
+
+        // 荣耀推送初始化
+        boolean isSupport = HonorPushClient.getInstance().checkSupportHonorPush(context.getApplicationContext());
+        if (!isSupport) {
+            return;
+        }
+        HonorPushClient.getInstance().init(context.getApplicationContext(), true);
+
+        // VIVO推送初始化
+        if (BrandUtils.isBrandVivo()) {
+            try {
+                PushConfig config = new PushConfig.Builder().agreePrivacyStatement(true).build();
+                PushClient.getInstance(context).initialize(config);
+            } catch (VivoPushException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -46,6 +68,7 @@ public abstract class XyPushManager {
 
     /**
      * 更新桌面角标
+     *
      * @param number
      */
     public abstract void updateBadge(int number);

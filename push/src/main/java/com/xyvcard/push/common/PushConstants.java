@@ -10,7 +10,7 @@ public class PushConstants {
     /**
      * 华为推送
      */
-    public static String huaweiAPPID = "111859709";
+    public static String huaweiAPPID = "111879447";
     public static String huaweiBadgeClassName = "";
     public static String huaweiTokenScope = "HCM";
     /**
@@ -21,7 +21,7 @@ public class PushConstants {
 
     public static String vivoBadgeClassName = "";
 
-    public static String notifyChannelId = "new_msg_notification";
+    public static String notifyChannelId = "wk_new_msg_notification";
     public static String notifyChannelName = "新消息通知";
     public static String notifyChannelDescription = "聊天消息通知";
 

@@ -1,5 +1,6 @@
 package com.xyvcard.push.utils;
 
+import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import java.util.List;
  * 手机型号判断
  */
 public class BadgeUtils {
+    private static final String TAG = "BadgeUtils";
 
     /**
      * 打开通知设置界面
@@ -105,15 +107,32 @@ public class BadgeUtils {
                 Log.e("设置红点", "-->不支持");
             }
         } else if (BrandUtils.isBrandVivo()) {
+            Uri uri = Uri.parse("content://" + "com.vivo.abe.provider.launcher.notification.num");
+            Bundle extra = new Bundle();
+            extra.putString("package", context.getPackageName()); //接入的App包名
+            extra.putString("class", PushConstants.vivoBadgeClassName);//接入的App class名
+            extra.putInt("badgenumber", number);//目标的角标数
+            /*这里一定要先使用 ContentProviderClient 建立非稳连接，不可以直接通过 getContentResolver()调用 call 方法，会有 Server 端崩溃带崩 Client 端的风险*/
+            ContentProviderClient client = null;
             try {
-                Intent intent = new Intent("launcher.action.CHANGE_APPLICATION_NOTIFICATION_NUM");
-                intent.putExtra("packageName", context.getPackageName());
-                // String launchClassName = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName()).getComponent().getClassName();
-                intent.putExtra("className", PushConstants.vivoBadgeClassName);
-                intent.putExtra("notificationNum", number);
-                context.sendBroadcast(intent);
+                client = context.getContentResolver().acquireUnstableContentProviderClient(uri);
+                if (client != null) {
+                    int result = client.call("change_badge", null, extra).getInt("result");
+                } else {
+                    // TODO 调用角标接口失败或者不支持
+                    Log.d(TAG, "setBadge: 不支持设置角标");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e(TAG, "setBadge: ", e);
+            } finally {
+                if (client != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        client.close();
+                    } else {
+                        client.release();
+                    }
+                }
             }
         } else if (BrandUtils.isBrandOppo()) {
             try {

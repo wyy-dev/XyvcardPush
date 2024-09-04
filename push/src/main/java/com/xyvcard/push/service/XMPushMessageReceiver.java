@@ -68,6 +68,8 @@ public class XMPushMessageReceiver extends PushMessageReceiver {
                 if (!TextUtils.isEmpty(mRegId)) {
                     XyPushManager.getInstance().refreshPushToken(mRegId);
                 }
+            } else {
+                XyPushManager.getInstance().refreshPushToken("");
             }
         } else if (MiPushClient.COMMAND_SET_ALIAS.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
@@ -106,6 +108,8 @@ public class XMPushMessageReceiver extends PushMessageReceiver {
                 if (!TextUtils.isEmpty(mRegId)) {
                     XyPushManager.getInstance().refreshPushToken(mRegId);
                 }
+            } else {
+                XyPushManager.getInstance().refreshPushToken("");
             }
         }
     }

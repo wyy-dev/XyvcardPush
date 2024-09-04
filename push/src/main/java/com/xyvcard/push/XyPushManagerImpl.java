@@ -1,16 +1,16 @@
 package com.xyvcard.push;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.heytap.msp.push.HeytapPushManager;
 import com.hihonor.push.sdk.HonorPushCallback;
 import com.hihonor.push.sdk.HonorPushClient;
-import com.huawei.hms.push.HmsMessaging;
+import com.huawei.hms.aaid.HmsInstanceId;
+import com.huawei.hms.common.ApiException;
 import com.vivo.push.IPushActionListener;
 import com.vivo.push.PushClient;
-import com.vivo.push.PushConfig;
 import com.vivo.push.listener.IPushQueryActionListener;
-import com.vivo.push.util.VivoPushException;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xyvcard.push.common.MyContext;
 import com.xyvcard.push.common.PushConstants;
@@ -38,6 +38,7 @@ class XyPushManagerImpl extends XyPushManager {
     @Override
     public void registerPush() {
         if (getContext() == null || getContext() == null) return;
+        Log.d(TAG, "registerPush: 1");
         if (BrandUtils.isBrandHuawei()) {
             new Thread(() -> initHuaWeiPush()).start();
         } else if (BrandUtils.isBrandXiaoMi()) {
@@ -45,6 +46,7 @@ class XyPushManagerImpl extends XyPushManager {
         } else if (BrandUtils.isBrandOppo()) {
             initOppoPush();
         } else if (BrandUtils.isBrandVivo()) {
+            Log.d(TAG, "registerPush: vivo");
             initVIVOPush();
         } else if (BrandUtils.isBrandHonor()) {
             initHonorPush();
@@ -60,7 +62,17 @@ class XyPushManagerImpl extends XyPushManager {
      * 初始化华为推送
      */
     private void initHuaWeiPush() {
-        HmsMessaging.getInstance(getContext()).setAutoInitEnabled(true);
+        try {
+            String token = HmsInstanceId.getInstance(getContext()).getToken(PushConstants.huaweiAPPID, PushConstants.huaweiTokenScope);
+            // 判断token是否为空
+            if (!TextUtils.isEmpty(token)) {
+                Log.e("华为推送token", token);
+                refreshPushToken(token);
+            }
+        } catch (ApiException e) {
+            Log.e(TAG, "initHuaWeiPush: ", e);
+            refreshPushToken("");
+        }
     }
 
     /**
@@ -90,13 +102,6 @@ class XyPushManagerImpl extends XyPushManager {
      * 初始化VIVO推送
      */
     private void initVIVOPush() {
-        try {
-            PushConfig config = new PushConfig.Builder().agreePrivacyStatement(true).build();
-            PushClient.getInstance(getContext()).initialize(config);
-        } catch (VivoPushException e) {
-            e.printStackTrace();
-        }
-
         PushClient.getInstance(getContext().getApplicationContext()).turnOnPush(new IPushActionListener() {
             @Override
             public void onStateChanged(int state) {
@@ -105,14 +110,17 @@ class XyPushManagerImpl extends XyPushManager {
                     PushClient.getInstance(getContext()).getRegId(new IPushQueryActionListener() {
                         @Override
                         public void onSuccess(String regId) {
+                            Log.d(TAG, "onStateChanged: " + regId);
                             refreshPushToken(regId);
                         }
 
                         @Override
                         public void onFail(Integer integer) {
-
+                            Log.d(TAG, "onStateChanged: onFail->" + integer);
                         }
                     });
+                } else {
+                    Log.d(TAG, "onStateChanged: " + state);
                 }
             }
         });
@@ -122,12 +130,6 @@ class XyPushManagerImpl extends XyPushManager {
      * 初始化荣耀推送
      */
     private void initHonorPush() {
-        // 荣耀推送
-        boolean isSupport = HonorPushClient.getInstance().checkSupportHonorPush(getContext().getApplicationContext());
-        if (!isSupport) {
-            return;
-        }
-        HonorPushClient.getInstance().init(getContext().getApplicationContext(), true);
         // 获取PushToken
         HonorPushClient.getInstance().getPushToken(new HonorPushCallback<String>() {
             @Override
@@ -137,6 +139,7 @@ class XyPushManagerImpl extends XyPushManager {
 
             @Override
             public void onFailure(int errorCode, String errorString) {
+                refreshPushToken("");
             }
         });
     }
