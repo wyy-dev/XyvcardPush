@@ -30,23 +30,26 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.startup:startup-runtime:1.1.1'
+    api 'androidx.appcompat:appcompat:1.7.0'
+    api 'com.google.android.material:material:1.12.0'
+    api 'androidx.startup:startup-runtime:1.1.1'
     // 华为推送
-    implementation 'com.huawei.hms:push:6.7.0.300'
+    api 'com.huawei.hms:push:6.7.0.300'
     // 小米推送 MiPush_SDK_Client_6_0_1-C_3rd.aar
     // 荣耀推送
-    implementation 'com.hihonor.mcs:push:8.0.12.307'
+    api 'com.hihonor.mcs:push:8.0.12.307'
     // oppo推送
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'commons-codec:commons-codec:1.6'
-    implementation 'androidx.annotation:annotation:1.1.0'
+    api 'com.google.code.gson:gson:2.10.1'
+    api 'commons-codec:commons-codec:1.6'
+    api 'androidx.annotation:annotation:1.1.0'
     // vivo推送 vivo_pushSDK_v4.0.4.0_504.aar
 
-    implementation project(path: ':mi')
-    implementation project(path: ':oppo')
-    implementation project(path: ':vivo')
+    // implementation project(path: ':mi')
+    // implementation project(path: ':oppo')
+    // implementation project(path: ':vivo')
+    api 'io.github.wyy-dev:xm-push:1.0.0'
+    api 'io.github.wyy-dev:oppo-push:1.0.0'
+    api 'io.github.wyy-dev:vivo-push:1.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
@@ -65,7 +68,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-    coordinates("io.github.wyy-dev", "xypush", "0.0.2")
+    coordinates("io.github.wyy-dev", "xypush", "0.0.5")
 
     pom {
         name = "xypush"
