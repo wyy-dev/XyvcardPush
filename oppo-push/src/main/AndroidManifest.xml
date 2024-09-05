@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="33" />
+
+    <application>
+        <meta-data
+            android:name="sdkVersion"
+            android:value="3502" />
+    </application>
+
+</manifest>

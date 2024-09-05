@@ -1,0 +1,72 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.vanniktech.maven.publish)
+}
+
+android {
+    namespace 'com.xyvcard.xm'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
+
+import com.vanniktech.maven.publish.SonatypeHost
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+}
+
+mavenPublishing {
+    coordinates("io.github.wyy-dev", "xm-push", "1.0.0")
+    pom {
+        name = "xm-push"
+        description = "小米推送"
+        inceptionYear = "2024"
+        url = "https://github.com/wyy-dev/XyvcardPush/"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "wyy-dev"
+                name = "wyy"
+                url = "https://github.com/wyy-dev/"
+            }
+        }
+        scm {
+            url = "https://github.com/wyy-dev/XyvcardPush/"
+            connection = "scm:git:git://github.com/wyy-dev/XyvcardPush.git"
+            developerConnection = "scm:git:ssh://git@github.com/wyy-dev/XyvcardPush.git"
+        }
+    }
+}
