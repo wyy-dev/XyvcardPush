@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.xyvcard.vivo'
+    namespace 'com.vivo.push'
     compileSdk 34
 
     defaultConfig {
@@ -43,7 +43,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-    coordinates("io.github.wyy-dev", "vivo-push", "1.0.0")
+    coordinates("io.github.wyy-dev", "vivo-push", "1.0.1")
     pom {
         name = "vivo-push"
         description = "VIVO推送"

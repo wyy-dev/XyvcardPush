@@ -44,12 +44,12 @@ dependencies {
     api 'androidx.annotation:annotation:1.1.0'
     // vivo推送 vivo_pushSDK_v4.0.4.0_504.aar
 
-    // implementation project(path: ':mi')
-    // implementation project(path: ':oppo')
-    // implementation project(path: ':vivo')
-    api 'io.github.wyy-dev:xm-push:1.0.0'
-    api 'io.github.wyy-dev:oppo-push:1.0.0'
-    api 'io.github.wyy-dev:vivo-push:1.0.0'
+//     implementation project(path: ':mi')
+//     implementation project(path: ':oppo')
+//     implementation project(path: ':vivo')
+    api 'io.github.wyy-dev:xm-push:1.0.1'
+    api 'io.github.wyy-dev:oppo-push:1.0.1'
+    api 'io.github.wyy-dev:vivo-push:1.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
@@ -68,7 +68,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-    coordinates("io.github.wyy-dev", "xypush", "0.0.5")
+    coordinates("io.github.wyy-dev", "xypush", "0.0.6")
 
     pom {
         name = "xypush"

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.xyvcard.xm'
+    namespace 'com.xiaomi.push'
     compileSdk 34
 
     defaultConfig {
@@ -43,7 +43,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-    coordinates("io.github.wyy-dev", "xm-push", "1.0.0")
+    coordinates("io.github.wyy-dev", "xm-push", "1.0.1")
     pom {
         name = "xm-push"
         description = "小米推送"
